@@ -23,9 +23,6 @@
       integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
       crossorigin="anonymous"
     ></script>
-
-    <script src="app.js"></script>
-
     <title>Quiz-App</title>
   </head>
   <body>
@@ -51,12 +48,12 @@
             </div>
           </div>
           <div class="col-md-8">
-            <div class="card-body">
-              <h5 class="card-title" style="font-size: x-large;">Welcome to <br>The Awesome HTML Quiz</h5>
+            <div class="card-body" id="quizContainer">
+              <h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome HTML Quiz</h5>
               <p class="card-text">
                 Ready for the Challenge?
               </p>
-              <button class="startButton">
+              <button class="startButton" id="startButton">
                 START NOW <img src="img/rightArrow.png"/>
               </button>
             </div>
@@ -65,4 +62,5 @@
       </div>
     </div>
   </body>
+  <script src="app.js"></script>
 </html>

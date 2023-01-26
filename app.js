@@ -1,6 +1,6 @@
 const category = document.querySelectorAll(".category");
 
-console.log(category);
+let currentQuestion = 0;
 
 let questionsHTML = [
   {
@@ -145,9 +145,48 @@ let questionsJava = [
 ];
 
 function chooseCategory(category) {
-  const choosenCategory = category.textContent;
-  console.log(choosenCategory);
+  let choosenCategory = category.textContent;
+  document.getElementById("startButton").addEventListener("click", () => quizBody(choosenCategory));
+  document.getElementById("quizTitle").innerHTML = "";
+  document.getElementById("quizTitle").innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
 }
+
+function quizBody(category) {
+  document.getElementById("quizContainer").innerHTML = "";
+  document.getElementById("quizContainer").innerHTML = `
+  <div class="card-body quizQuestions">
+  <h5 class="card-title" id="questionText">Frage</h5>
+
+  <div class="card mb-2">
+    <div class="card-body quizAnswer" onclick="answer('answer_1')" id="answer_1">Antwort</div>
+  </div>
+
+  <div class="card mb-2">
+    <div class="card-body quizAnswer" onclick="answer('answer_2')" id="answer_2">Antwort</div>
+  </div>
+
+  <div class="card mb-2">
+    <div class="card-body quizAnswer" onclick="answer('answer_3')" id="answer_3">Antwort</div>
+  </div>
+
+  <div class="card mb-2">
+    <div class="card-body quizAnswer" onclick="answer('answer_4')" id="answer_4">Antwort</div>
+  </div>
+  `;
+  showQuestion(category);
+}
+
+const questionNumber = 0;
+
+function showQuestion(category) {
+    let categoryQuestion = eval("questions" + category + []);
+    let quiz = categoryQuestion[questionNumber];
+    document.getElementById("questionText").innerHTML = quiz["question"];
+    document.getElementById("answer_1").innerHTML = quiz["answer_1"];
+    document.getElementById("answer_2").innerHTML = quiz["answer_2"];
+    document.getElementById("answer_3").innerHTML = quiz["answer_3"];
+    document.getElementById("answer_4").innerHTML = quiz["answer_4"];
+};
 
 category.forEach((category) =>
   category.addEventListener("click", () => chooseCategory(category))
