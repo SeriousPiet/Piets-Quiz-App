@@ -1,6 +1,12 @@
+document.getElementById("startButton").addEventListener("click",  () => quizBody("HTML"));
+
 const category = document.querySelectorAll(".category");
 
-let currentQuestion = 0;
+let quiz = [];
+let questionNumber = 0;
+let quizBodyChoosen = false;
+let points = 0;
+let arrayLength = 0
 
 let questionsHTML = [
   {
@@ -146,47 +152,107 @@ let questionsJava = [
 
 function chooseCategory(category) {
   let choosenCategory = category.textContent;
-  document.getElementById("startButton").addEventListener("click", () => quizBody(choosenCategory));
-  document.getElementById("quizTitle").innerHTML = "";
-  document.getElementById("quizTitle").innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
+  if (quizBodyChoosen === true) {
+    quizBodyChoosen = false;
+    document.getElementById("quizContainer").innerHTML = "";
+    document.getElementById("quizContainer").innerHTML = `
+  <h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome HTML Quiz</h5>
+  <p class="card-text">
+    Ready for the Challenge?
+  </p>
+  <button class="startButton" id="startButton">
+    START NOW <img src="img/rightArrow.png"/>
+  </button>
+  `;
+    document
+      .getElementById("startButton")
+      .addEventListener("click", () => quizBody(choosenCategory));
+    document.getElementById("quizTitle").innerHTML = "";
+    document.getElementById(
+      "quizTitle"
+    ).innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
+  } else {
+    document
+      .getElementById("startButton")
+      .addEventListener("click", () => quizBody(choosenCategory));
+    document.getElementById("quizTitle").innerHTML = "";
+    document.getElementById(
+      "quizTitle"
+    ).innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
+  }
 }
 
 function quizBody(category) {
+  quizBodyChoosen = true;
   document.getElementById("quizContainer").innerHTML = "";
   document.getElementById("quizContainer").innerHTML = `
   <div class="card-body quizQuestions">
   <h5 class="card-title" id="questionText">Frage</h5>
 
-  <div class="card mb-2">
-    <div class="card-body quizAnswer" onclick="answer('answer_1')" id="answer_1">Antwort</div>
+  <div class="card mb-2 answerCard">
+  <div class="answerSelector">A</div><div class="card-body quizAnswer" onclick="answer('answer_1')" id="answer_1">Antwort</div>
   </div>
 
-  <div class="card mb-2">
-    <div class="card-body quizAnswer" onclick="answer('answer_2')" id="answer_2">Antwort</div>
+  <div class="card mb-2 answerCard">
+  <div class="answerSelector">B</div><div class="card-body quizAnswer" onclick="answer('answer_2')" id="answer_2">Antwort</div>
   </div>
 
-  <div class="card mb-2">
-    <div class="card-body quizAnswer" onclick="answer('answer_3')" id="answer_3">Antwort</div>
+  <div class="card mb-2 answerCard">
+  <div class="answerSelector">C</div><div class="card-body quizAnswer" onclick="answer('answer_3')" id="answer_3">Antwort</div>
   </div>
 
-  <div class="card mb-2">
-    <div class="card-body quizAnswer" onclick="answer('answer_4')" id="answer_4">Antwort</div>
+  <div class="card mb-2 answerCard">
+  <div class="answerSelector">D</div><div class="card-body quizAnswer" onclick="answer('answer_4')" id="answer_4">Antwort</div>
   </div>
+
+  <div class="nextBefore"><img class="back-button" id="back-button" disabled onclick="lastQuestion(${category})" src="img/back.png"/><img class="next-button" id="next-button" disabled onclick="nextQuestion(${category})" src="img/next.png"/></div>
   `;
   showQuestion(category);
 }
 
-const questionNumber = 0;
-
 function showQuestion(category) {
-    let categoryQuestion = eval("questions" + category + []);
-    let quiz = categoryQuestion[questionNumber];
-    document.getElementById("questionText").innerHTML = quiz["question"];
-    document.getElementById("answer_1").innerHTML = quiz["answer_1"];
-    document.getElementById("answer_2").innerHTML = quiz["answer_2"];
-    document.getElementById("answer_3").innerHTML = quiz["answer_3"];
-    document.getElementById("answer_4").innerHTML = quiz["answer_4"];
-};
+  arrayLength = eval("questions" + category + []).length;
+  quiz = eval("questions" + category + [])[questionNumber];
+  document.getElementById("questionText").innerHTML = quiz["question"];
+  document.getElementById("answer_1").innerHTML = quiz["answer_1"];
+  document.getElementById("answer_2").innerHTML = quiz["answer_2"];
+  document.getElementById("answer_3").innerHTML = quiz["answer_3"];
+  document.getElementById("answer_4").innerHTML = quiz["answer_4"];
+}
+
+function answer(selection) {
+  questionNumber++;
+  let selectedNumber = selection.slice(-1);
+  let idOFRightAnswer = `answer_${quiz["right_answer"]}`;
+  if (selectedNumber == quiz["right_answer"]) {
+    document.getElementById(selection).parentNode.classList.add("bg-success");
+    points++;
+  } else {
+    document.getElementById(selection).parentNode.classList.add("bg-danger");
+    document.getElementById(idOFRightAnswer).parentNode.classList.add("bg-success");
+  }
+  let percent = questionNumber/arrayLength;
+  percent = Math.round(percent*100);
+  document.getElementById("percent").style = `width: ${percent}%;`;
+  document.getElementById("next-button").disabled = false;
+}
+
+function nextQuestion() {
+  showQuestion();
+  resetAnswers();
+  document.getElementById("next-button").disabled = true;
+}
+
+function resetAnswers() {
+  for (let i = 1; i <= 4; i++) {
+    document
+      .getElementById(`answer_${i}`)
+      .parentNode.classList.remove("bg-success");
+    document
+      .getElementById(`answer_${i}`)
+      .parentNode.classList.remove("bg-danger");
+  }
+}
 
 category.forEach((category) =>
   category.addEventListener("click", () => chooseCategory(category))

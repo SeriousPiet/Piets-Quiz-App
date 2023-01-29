@@ -4,6 +4,13 @@ body {
     height: 100vh;
 }
 
+.quizQuestions {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
 .quizApp {
     display: flex;
     flex-direction: column;
@@ -16,6 +23,48 @@ body {
 
 .card {
     width: 50rem;
+}
+
+.answerSelector {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.25rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: large;
+    font-weight: bold;
+    background-color: rgba(115, 115, 115, 0.5);
+}
+
+.answerCard {
+    width: 30rem;
+    height: 2.5rem !important;
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.quizAnswer {
+    text-align: left !important;
+    font-size: 1rem !important;
+    padding: 0.5rem !important;
+}
+
+.answerCard:hover {
+    cursor: pointer;
+    background-color: darkgray;
+}
+
+.nextBefore {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 30rem;
+}
+
+.nextBefore img:hover {
+    cursor: pointer;
+    transform: scale(1.1);
 }
 
 .categories {
@@ -68,6 +117,9 @@ body {
     background-image: url(img/brainbg.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 .card-body {
@@ -92,4 +144,10 @@ body {
 .startButton img {
     height: 1.5rem;
     width: 1rem;
+}
+
+@media (max-width: 600px) {
+    .quizApp {
+        transform: scale(0.3);
+    }
 }
