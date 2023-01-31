@@ -6,7 +6,8 @@ let quiz = [];
 let questionNumber = 0;
 let quizBodyChoosen = false;
 let points = 0;
-let arrayLength = 0
+let arrayLength = 0;
+let categoryMemory;
 
 let questionsHTML = [
   {
@@ -26,19 +27,19 @@ let questionsHTML = [
     right_answer: 1,
   },
   {
-    question: "Which of these elements are all <table> elements?",
-    answer_1: "<table><tr><td>",
-    answer_2: "<thead><body><tr>",
-    answer_3: "<table><head><tfoot>",
-    answer_4: "<table><tr><tt>",
+    question: "Which of these elements are all &lt;table&gt; elements?",
+    answer_1: "&lt;table&gt;&lt;tr&gt;&lt;td&gt;",
+    answer_2: "&lt;thead&gt;&lt;body&gt;&lt;tr&gt;",
+    answer_3: "&lt;table&gt;&lt;head&gt;&lt;tfoot&gt;",
+    answer_4: "&lt;table&gt;&lt;tr&gt;&lt;tt&gt;",
     right_answer: 1,
   },
   {
     question: "How can you make a numbered list?",
-    answer_1: "<ul>",
-    answer_2: "<ol>",
-    answer_3: "<list>",
-    answer_4: "<dl>",
+    answer_1: "&lt;ul&gt;",
+    answer_2: "&lt;ol&gt;",
+    answer_3: "&lt;list&gt;",
+    answer_4: "&lt;dl&gt;",
     right_answer: 2,
   },
 ];
@@ -81,27 +82,27 @@ let questionsCSS = [
 let questionsJS = [
   {
     question: "Inside which HTML element do we put the JavaScript",
-    answer_1: "<scripting>",
-    answer_2: "<javascript>",
-    answer_3: "<js>",
-    answer_4: "<script>",
+    answer_1: "&lt;scripting&gt;",
+    answer_2: "&lt;javascript&gt;",
+    answer_3: "&lt;js&gt;",
+    answer_4: "&lt;script&gt;",
     right_answer: 4,
   },
   {
     question:
-      "What is the correct JavaScript syntax to change the content of the HTML element below?<br><br><p id='demo'>This is a demonstration.</p>",
-    answer_1: "document.getElementById('demo').innerHTML = 'Hello World!';",
-    answer_2: "document.getElementById('p').innerHTML = 'Hello World!';",
-    answer_3: "#demo.innerHTML = 'Hello World!';",
-    answer_4: "document.getElement('p').innerHTML = 'Hello World!';",
+      "What is the correct JavaScript syntax to change the content of the HTML element below?<br><br>&lt;p id=&ldquo;demo&rdquo;&gt;This is a demonstration.&lt;/p&gt;",
+    answer_1: "document.getElementById(&ldquo;demo&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_2: "document.getElementById(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_3: "#demo.innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_4: "document.getElement(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
     right_answer: 1,
   },
   {
     question: "How do you write 'Hello World' in an alert box?",
-    answer_1: "msgBox('Hello World!');",
-    answer_2: "alertBox('Hello World!');",
-    answer_3: "msg('Hello World!');",
-    answer_4: "alert('Hello World!');",
+    answer_1: "msgBox(&ldquo;Hello World!&rdquo;);",
+    answer_2: "alertBox(&ldquo;Hello World!&rdquo;);",
+    answer_3: "msg(&ldquo;Hello World!&rdquo;);",
+    answer_4: "alert(&ldquo;Hello World!&rdquo;);",
     right_answer: 4,
   },
   {
@@ -116,11 +117,11 @@ let questionsJS = [
 
 let questionsJava = [
   {
-    question: "What is a correct syntax to output 'Hello World' in Java?",
-    answer_1: "echo('Hello World');",
-    answer_2: "Console.WriteLine('Hello World');",
-    answer_3: "print('Hello World');",
-    answer_4: "System.out.printIn('Hello World');",
+    question: "What is a correct syntax to output &ldquo;Hello World&rdquo; in Java?",
+    answer_1: "echo(&ldquo;Hello World&rdquo;);",
+    answer_2: "Console.WriteLine(&ldquo;Hello World&rdquo;);",
+    answer_3: "print(&ldquo;Hello World&rdquo;);",
+    answer_4: "System.out.printIn(&ldquo;Hello World&rdquo;);",
     right_answer: 4,
   },
   {
@@ -205,7 +206,7 @@ function quizBody(category) {
   <div class="answerSelector">D</div><div class="card-body quizAnswer" onclick="answer('answer_4')" id="answer_4">Antwort</div>
   </div>
 
-  <div class="nextBefore"><img class="back-button" id="back-button" disabled onclick="lastQuestion(${category})" src="img/back.png"/><img class="next-button" id="next-button" disabled onclick="nextQuestion(${category})" src="img/next.png"/></div>
+  <div class="nextBefore"><img class="back-button" id="back-button" disabled onclick="lastQuestion('${category}')" src="img/back.png"/><img class="next-button" id="next-button" disabled onclick="nextQuestion('${category}')" src="img/next.png"/></div>
   `;
   showQuestion(category);
 }
@@ -237,8 +238,8 @@ function answer(selection) {
   document.getElementById("next-button").disabled = false;
 }
 
-function nextQuestion() {
-  showQuestion();
+function nextQuestion(category) {
+  showQuestion(category);
   resetAnswers();
   document.getElementById("next-button").disabled = true;
 }
