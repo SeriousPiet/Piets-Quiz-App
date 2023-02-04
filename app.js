@@ -1,13 +1,15 @@
-document.getElementById("startButton").addEventListener("click",  () => quizBody("HTML"));
+document
+  .getElementById("startButton")
+  .addEventListener("click", () => quizBody("HTML"));
 
 const category = document.querySelectorAll(".category");
 
 let quiz = [];
+let quizCategory = ["HTML", "CSS", "JS", "Java"];
 let questionNumber = 0;
-let quizBodyChoosen = false;
 let points = 0;
+let progressNumber = 0;
 let arrayLength = 0;
-let categoryMemory;
 
 let questionsHTML = [
   {
@@ -17,6 +19,7 @@ let questionsHTML = [
     answer_3: "Tim Berners-Lee",
     answer_4: "Justin Bieber",
     right_answer: 3,
+    given_answer: "",
   },
   {
     question: "Which character is used to indicate an end tag?",
@@ -25,6 +28,7 @@ let questionsHTML = [
     answer_3: "^",
     answer_4: "<",
     right_answer: 1,
+    given_answer: "",
   },
   {
     question: "Which of these elements are all &lt;table&gt; elements?",
@@ -33,6 +37,7 @@ let questionsHTML = [
     answer_3: "&lt;table&gt;&lt;head&gt;&lt;tfoot&gt;",
     answer_4: "&lt;table&gt;&lt;tr&gt;&lt;tt&gt;",
     right_answer: 1,
+    given_answer: "",
   },
   {
     question: "How can you make a numbered list?",
@@ -41,6 +46,7 @@ let questionsHTML = [
     answer_3: "&lt;list&gt;",
     answer_4: "&lt;dl&gt;",
     right_answer: 2,
+    given_answer: "",
   },
 ];
 
@@ -52,6 +58,7 @@ let questionsCSS = [
     answer_3: "Computer Style Sheets",
     answer_4: "Cascading Style Sheets",
     right_answer: 4,
+    given_answer: "",
   },
   {
     question: "Which HTML attribute is used to define inline styles?",
@@ -60,6 +67,7 @@ let questionsCSS = [
     answer_3: "font",
     answer_4: "styles",
     right_answer: 1,
+    given_answer: "",
   },
   {
     question: "Which is the correct CSS syntax",
@@ -68,6 +76,7 @@ let questionsCSS = [
     answer_3: "body {color: black;}",
     answer_4: "{body:color=black;}",
     right_answer: 3,
+    given_answer: "",
   },
   {
     question: "How do you insert a comment in a CSS file",
@@ -76,6 +85,7 @@ let questionsCSS = [
     answer_3: "// this is a comment",
     answer_4: "// this is a comment //",
     right_answer: 1,
+    given_answer: "",
   },
 ];
 
@@ -87,15 +97,20 @@ let questionsJS = [
     answer_3: "&lt;js&gt;",
     answer_4: "&lt;script&gt;",
     right_answer: 4,
+    given_answer: "",
   },
   {
     question:
       "What is the correct JavaScript syntax to change the content of the HTML element below?<br><br>&lt;p id=&ldquo;demo&rdquo;&gt;This is a demonstration.&lt;/p&gt;",
-    answer_1: "document.getElementById(&ldquo;demo&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
-    answer_2: "document.getElementById(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_1:
+      "document.getElementById(&ldquo;demo&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_2:
+      "document.getElementById(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
     answer_3: "#demo.innerHTML = &ldquo;Hello World!&rdquo;;",
-    answer_4: "document.getElement(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
+    answer_4:
+      "document.getElement(&ldquo;p&rdquo;).innerHTML = &ldquo;Hello World!&rdquo;;",
     right_answer: 1,
+    given_answer: "",
   },
   {
     question: "How do you write 'Hello World' in an alert box?",
@@ -104,6 +119,7 @@ let questionsJS = [
     answer_3: "msg(&ldquo;Hello World!&rdquo;);",
     answer_4: "alert(&ldquo;Hello World!&rdquo;);",
     right_answer: 4,
+    given_answer: "",
   },
   {
     question: "How to write an IF statement in JavaScript?",
@@ -112,17 +128,20 @@ let questionsJS = [
     answer_3: "if i == 5 then",
     answer_4: "if (i == 5)",
     right_answer: 4,
+    given_answer: "",
   },
 ];
 
 let questionsJava = [
   {
-    question: "What is a correct syntax to output &ldquo;Hello World&rdquo; in Java?",
+    question:
+      "What is a correct syntax to output &ldquo;Hello World&rdquo; in Java?",
     answer_1: "echo(&ldquo;Hello World&rdquo;);",
     answer_2: "Console.WriteLine(&ldquo;Hello World&rdquo;);",
     answer_3: "print(&ldquo;Hello World&rdquo;);",
     answer_4: "System.out.printIn(&ldquo;Hello World&rdquo;);",
     right_answer: 4,
+    given_answer: "",
   },
   {
     question:
@@ -132,6 +151,7 @@ let questionsJava = [
     answer_3: "string",
     answer_4: "myString",
     right_answer: 2,
+    given_answer: "",
   },
   {
     question: "How do you create a variable with the floating number 2.8?",
@@ -140,6 +160,7 @@ let questionsJava = [
     answer_3: "float x = 2.8f;",
     answer_4: "byte x = 2.8f",
     right_answer: 3,
+    given_answer: "",
   },
   {
     question: "Which method can be used to find the length of a string?",
@@ -148,15 +169,15 @@ let questionsJava = [
     answer_3: "len()",
     answer_4: "legnth()",
     right_answer: 4,
+    given_answer: "",
   },
 ];
 
 function chooseCategory(category) {
   let choosenCategory = category.textContent;
-  if (quizBodyChoosen === true) {
-    quizBodyChoosen = false;
-    document.getElementById("quizContainer").innerHTML = "";
-    document.getElementById("quizContainer").innerHTML = `
+  resetEverything();
+  document.getElementById("quizContainer").innerHTML = "";
+  document.getElementById("quizContainer").innerHTML = `
   <h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome HTML Quiz</h5>
   <p class="card-text">
     Ready for the Challenge?
@@ -165,26 +186,16 @@ function chooseCategory(category) {
     START NOW <img src="img/rightArrow.png"/>
   </button>
   `;
-    document
-      .getElementById("startButton")
-      .addEventListener("click", () => quizBody(choosenCategory));
-    document.getElementById("quizTitle").innerHTML = "";
-    document.getElementById(
-      "quizTitle"
-    ).innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
-  } else {
-    document
-      .getElementById("startButton")
-      .addEventListener("click", () => quizBody(choosenCategory));
-    document.getElementById("quizTitle").innerHTML = "";
-    document.getElementById(
-      "quizTitle"
-    ).innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
-  }
+  document
+    .getElementById("startButton")
+    .addEventListener("click", () => quizBody(choosenCategory));
+  document.getElementById("quizTitle").innerHTML = "";
+  document.getElementById(
+    "quizTitle"
+  ).innerHTML = `<h5 class="card-title" style="font-size: x-large;" id="quizTitle">Welcome to <br>The Awesome ${choosenCategory} Quiz</h5>`;
 }
 
 function quizBody(category) {
-  quizBodyChoosen = true;
   document.getElementById("quizContainer").innerHTML = "";
   document.getElementById("quizContainer").innerHTML = `
   <div class="card-body quizQuestions">
@@ -206,7 +217,7 @@ function quizBody(category) {
   <div class="answerSelector">D</div><div class="card-body quizAnswer" onclick="answer('answer_4')" id="answer_4">Antwort</div>
   </div>
 
-  <div class="nextBefore"><img class="back-button" id="back-button" disabled onclick="lastQuestion('${category}')" src="img/back.png"/><img class="next-button" id="next-button" disabled onclick="nextQuestion('${category}')" src="img/next.png"/></div>
+  <div class="nextBefore"><button class="back-button" id="back-button" disabled onclick="lastQuestion('${category}')"></button><button class="next-button" id="next-button" disabled onclick="nextQuestion('${category}')"></button></div>
   `;
   showQuestion(category);
 }
@@ -222,26 +233,85 @@ function showQuestion(category) {
 }
 
 function answer(selection) {
-  questionNumber++;
   let selectedNumber = selection.slice(-1);
-  let idOFRightAnswer = `answer_${quiz["right_answer"]}`;
-  if (selectedNumber == quiz["right_answer"]) {
+  let idOfRightAnswer = `answer_${quiz["right_answer"]}`;
+  if (selectedNumber == quiz["right_answer"] && quiz["given_answer"] == "") {
     document.getElementById(selection).parentNode.classList.add("bg-success");
+    quiz["given_answer"] = selectedNumber;
     points++;
-  } else {
+    progress();
+  } else if (quiz["given_answer"] == "") {
     document.getElementById(selection).parentNode.classList.add("bg-danger");
-    document.getElementById(idOFRightAnswer).parentNode.classList.add("bg-success");
+    document
+      .getElementById(idOfRightAnswer)
+      .parentNode.classList.add("bg-success");
+    quiz["given_answer"] = selectedNumber;
+    progress();
   }
-  let percent = questionNumber/arrayLength;
-  percent = Math.round(percent*100);
+}
+
+function progress() {
+  progressNumber++;
+  let percent = progressNumber / arrayLength;
+  percent = Math.round(percent * 100);
   document.getElementById("percent").style = `width: ${percent}%;`;
   document.getElementById("next-button").disabled = false;
 }
 
-function nextQuestion(category) {
-  showQuestion(category);
+function lastQuestion(category) {
+  questionNumber = questionNumber - 1;
   resetAnswers();
-  document.getElementById("next-button").disabled = true;
+  showQuestion(category);
+  let idOfRightAnswer = `answer_${quiz["right_answer"]}`;
+  let idOfGivenAnswer = `answer_${quiz["given_answer"]}`;
+  if (idOfGivenAnswer === idOfRightAnswer) {
+    document
+      .getElementById(idOfRightAnswer)
+      .parentNode.classList.add("bg-success");
+  } else {
+    document
+      .getElementById(idOfGivenAnswer)
+      .parentNode.classList.add("bg-danger");
+    document
+      .getElementById(idOfRightAnswer)
+      .parentNode.classList.add("bg-success");
+  }
+  document.getElementById("next-button").disabled = false;
+  if (questionNumber === 0) {
+    document.getElementById("back-button").disabled = true;
+  }
+}
+
+function nextQuestion(category) {
+  questionNumber++;
+  if (questionNumber === arrayLength) {
+    endscreen(category);
+  } else {
+    quiz = eval("questions" + category + [])[questionNumber];
+    let idOfRightAnswer = `answer_${quiz["right_answer"]}`;
+    let idOfGivenAnswer = `answer_${quiz["given_answer"]}`;
+    if (quiz["given_answer"] === "") {
+      showQuestion(category);
+      resetAnswers();
+      document.getElementById("next-button").disabled = true;
+      document.getElementById("back-button").disabled = false;
+    } else {
+      showQuestion(category);
+      resetAnswers();
+      if (idOfGivenAnswer === idOfRightAnswer) {
+        document
+          .getElementById(idOfRightAnswer)
+          .parentNode.classList.add("bg-success");
+      } else {
+        document
+          .getElementById(idOfGivenAnswer)
+          .parentNode.classList.add("bg-danger");
+        document
+          .getElementById(idOfRightAnswer)
+          .parentNode.classList.add("bg-success");
+      }
+    }
+  }
 }
 
 function resetAnswers() {
@@ -253,6 +323,33 @@ function resetAnswers() {
       .getElementById(`answer_${i}`)
       .parentNode.classList.remove("bg-danger");
   }
+}
+
+function resetEverything() {
+  questionNumber = 0;
+  points = 0;
+  progressNumber = 0;
+  arrayLength = 0;
+  document.getElementById("percent").style = `width: 0%;`;
+  for (let i = 0; i < quizCategory.length; i++) {
+    let toClearCategory = eval("questions" + quizCategory[i] + []);
+    for (let k = 0; k < toClearCategory.length; k++) {
+      toClearCategory[k]["given_answer"] = "";
+    }
+  }
+}
+
+function endscreen(category) {
+  document.getElementById("quizContainer").innerHTML = "";
+  document.getElementById("quizContainer").innerHTML = `
+  <img class="brain" src="img/brain result.png">
+  <p class="card-text">YOUR SCORE ${points}/4</p>
+  <button class="replayButton" id="replayButton">REPLAY</button>
+  `;
+  document
+    .getElementById("replayButton")
+    .addEventListener("click", () => quizBody(category));
+  resetEverything();
 }
 
 category.forEach((category) =>
