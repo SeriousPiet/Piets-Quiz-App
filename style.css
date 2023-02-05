@@ -1,165 +1,176 @@
 body {
+    margin: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.quizQuestions {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.quizApp {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     height: 100vh;
-    margin: 0;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(255,250,240,255);
 }
 
-table {
-    border-collapse: collapse;
+.card {
+    width: 50rem;
 }
 
-table tr:first-child td {
-    border-top: 0;
-}
-
-table tr:last-child td {
-    border-bottom: 0;
-}
-
-table td:first-child {
-    border-left: 0;
-}
-
-table td:last-child {
-    border-right: 0;
-}
-
-tr {
-    width: 399px;
-    height: 133px;
-}
-
-td {
-    width: 133px;
-    height: 133px;
-    border: 5px solid black;
-}
-
-td:hover {
-    cursor: pointer;
-    background-color: rgba(0, 100, 0, 0.100);
-}
-
-table tr:first-child td {
-    border-top: 0;
-}
-
-table tr:last-child td {
-    border-bottom: 0;
-}
-
-table td:first-child {
-    border-left: 0;
-}
-
-table td:last-child {
-    border-right: 0;
-}
-
-.gameOver {
-    position: absolute;
-    width: 100%;
-    z-index: 2;
-    animation: zoomIn 225ms ease-in-out;
-}
-
-@keyframes zoomIn {
-    from{
-        transform: scale(0);
-    }
-    to{
-        transform: scale(1);
-    }
-}
-
-.restartButton {
-    border: 1px solid rgba(0,0,0,0.5);
-    background-color: blue;
-    z-index: 2;
-    width: 300px;
-    height: 100px;
-    color:white;
-    font-size: 40px;
-    cursor: pointer;
-    position: absolute;
-    bottom: 60px;
-}
-
-.restarButton:hover {
-    background-color: rgb(85, 85, 253);
-}
-
-.playerPanel {
-    display: flex;
-    font-size: 32px;
-}
-
-.playerPanel div {
+.answerSelector {
+    width: 2rem;
+    height: 2rem;
+    margin: 0.25rem;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 0px 16px 32px 16px;
+    font-size: large;
+    font-weight: bold;
+    background-color: rgba(115, 115, 115, 0.5);
 }
 
-.playerPanel img {
-    width: 60px;
-    height: 60px;
+.answerCard {
+    width: 30rem;
+    min-height: 2.5rem !important;
+    display: flex !important;
+    flex-direction: row !important;
 }
 
-.playerInactive {
-    opacity: 50%;
+.quizAnswer {
+    text-align: left !important;
+    font-size: 1rem !important;
+    padding: 0.5rem !important;
 }
 
-.horizontalLine {
-    height: 10px;
-    background-color: rgba(0,0,0,0.5);
-    width: 0px;
+.answerCard:hover {
+    cursor: pointer;
+    background-color: darkgray;
+}
+
+.nextBefore {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    width: 30rem;
+}
+
+.nextBefore button:hover {
+    cursor: pointer;
+    transform: scale(1.1);
+}
+
+.next-button {
+    background-image: url(img/next.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-width: 0;
+    height: 2rem;
+    width: 2rem;
+}
+
+.back-button {
+    background-image: url(img/back.png);
+    background-size: contain;
+    background-repeat: no-repeat;
+    border-width: 0;
+    height: 2rem;
+    width: 2rem;
+}
+
+.categories {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+    min-height: 25rem;
+    width: 300rem;
+    background-color: rgba(39,53,92,255);
+    color: rgba(151,163,190,255);
+    font-size: x-large;
+    line-height: 2.5rem;
+}
+
+.categories img {
     position: absolute;
-    transition: all 500ms ease-in-out;
+    top: 1rem;
+    width: 6rem;
+    height: auto;
 }
 
-.vertikalLine {
-    height: 350px;
-    background-color: rgba(0,0,0,0.5);
-    width: 10px;
+.categoriesChild {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.categoriesChild span:hover {
+    color: rgba(204,214,225,255);
+    cursor: pointer;
+}
+
+.progress {
     position: absolute;
-    transition: all 500ms ease-in-out;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    border-radius: 0 !important;
 }
 
-.diagonalLeftRight {
-    height: 400px;
-    background-color: rgba(0,0,0,0.5);
-    width: 10px;
-    position: absolute;
-    transform: rotate(-45deg);
-    transition: all 500ms ease-in-out;
+.bg-quizApp {
+    background-color: rgba(39,53,92,255) !important;
+    border-top-right-radius: 10px;
+    border-bottom-right-radius: 10px;
 }
 
-.diagonalRightLeft {
-    height: 400px;
-    background-color: rgba(0,0,0,0.5);
-    width: 10px;
-    position: absolute;
-    transform: rotate(45deg);
-    transition: all 500ms ease-in-out;
-}
-
-.dNone {
-    display: none;
-}
-
-.position {
+.col-md-8 {
     display: flex;
     align-items: center;
     justify-content: center;
+    background-image: url(img/brainbg.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    border: none;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
-.shape {
-    position: absolute;
-    width: 80px;
-    height: 80px;
+.card-body {
+    font-size: x-large;
+    text-align: center;
+}
+
+.startButton {
+    color: rgba(255,196,167,255);
+    float: right;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-width: 0;
+    border-radius: 5px;
+    background-color: rgba(255,77,19,255);
+    height: 2.5rem;
+    width: 12rem;
+    margin-top: 8rem;
+}
+
+.startButton img {
+    height: 1.5rem;
+    width: 1rem;
+}
+
+.brain {
+    height: 5rem;
+    width: 5rem;
 }
