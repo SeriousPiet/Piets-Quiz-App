@@ -1,0 +1,165 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    margin: 0;
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table tr:first-child td {
+    border-top: 0;
+}
+
+table tr:last-child td {
+    border-bottom: 0;
+}
+
+table td:first-child {
+    border-left: 0;
+}
+
+table td:last-child {
+    border-right: 0;
+}
+
+tr {
+    width: 399px;
+    height: 133px;
+}
+
+td {
+    width: 133px;
+    height: 133px;
+    border: 5px solid black;
+}
+
+td:hover {
+    cursor: pointer;
+    background-color: rgba(0, 100, 0, 0.100);
+}
+
+table tr:first-child td {
+    border-top: 0;
+}
+
+table tr:last-child td {
+    border-bottom: 0;
+}
+
+table td:first-child {
+    border-left: 0;
+}
+
+table td:last-child {
+    border-right: 0;
+}
+
+.gameOver {
+    position: absolute;
+    width: 100%;
+    z-index: 2;
+    animation: zoomIn 225ms ease-in-out;
+}
+
+@keyframes zoomIn {
+    from{
+        transform: scale(0);
+    }
+    to{
+        transform: scale(1);
+    }
+}
+
+.restartButton {
+    border: 1px solid rgba(0,0,0,0.5);
+    background-color: blue;
+    z-index: 2;
+    width: 300px;
+    height: 100px;
+    color:white;
+    font-size: 40px;
+    cursor: pointer;
+    position: absolute;
+    bottom: 60px;
+}
+
+.restarButton:hover {
+    background-color: rgb(85, 85, 253);
+}
+
+.playerPanel {
+    display: flex;
+    font-size: 32px;
+}
+
+.playerPanel div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0px 16px 32px 16px;
+}
+
+.playerPanel img {
+    width: 60px;
+    height: 60px;
+}
+
+.playerInactive {
+    opacity: 50%;
+}
+
+.horizontalLine {
+    height: 10px;
+    background-color: rgba(0,0,0,0.5);
+    width: 0px;
+    position: absolute;
+    transition: all 500ms ease-in-out;
+}
+
+.vertikalLine {
+    height: 350px;
+    background-color: rgba(0,0,0,0.5);
+    width: 10px;
+    position: absolute;
+    transition: all 500ms ease-in-out;
+}
+
+.diagonalLeftRight {
+    height: 400px;
+    background-color: rgba(0,0,0,0.5);
+    width: 10px;
+    position: absolute;
+    transform: rotate(-45deg);
+    transition: all 500ms ease-in-out;
+}
+
+.diagonalRightLeft {
+    height: 400px;
+    background-color: rgba(0,0,0,0.5);
+    width: 10px;
+    position: absolute;
+    transform: rotate(45deg);
+    transition: all 500ms ease-in-out;
+}
+
+.dNone {
+    display: none;
+}
+
+.position {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shape {
+    position: absolute;
+    width: 80px;
+    height: 80px;
+}

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css" />
+    <title>TicTacToe</title>
+</head>
+<body>
+    <img src="./img/gameOver.png" class="gameOver dNone" id="gameOver">
+    <button class="restartButton dNone" id="restartButton" onclick="restart()">Restart</button>
+    <div class="playerPanel">
+        <div id="player-1">
+            <img class="" src="./img/circle.png">Player 1
+        </div>
+        <div class="playerInactive" id="player-2">
+            <img class="" src="./img/cross.png">Player 2
+        </div>        
+    </div>
+    <table>
+        <tr>
+            <td onclick="fillShape(0)">
+                <div class="position">
+                    <img class="shape dNone" id="circle-0" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-0" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(1)">
+                <div class="position">
+                    <div id="win1"></div>
+                    <img class="shape dNone" id="circle-1" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-1" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(2)">
+                <div class="position">
+                    <img class="shape dNone" id="circle-2" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-2" src="./img/cross.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td onclick="fillShape(3)">
+                <div class="position">
+                    <div id="win3"></div>
+                    <img class="shape dNone" id="circle-3" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-3" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(4)">
+                <div class="position">
+                    <div id="win4"></div>
+                    <img class="shape dNone" id="circle-4" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-4" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(5)">
+                <div class="position">
+                    <div id="win5"></div>
+                    <img class="shape dNone" id="circle-5" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-5" src="./img/cross.png">
+                </div>
+            </td>
+        </tr>
+        <tr>
+            <td onclick="fillShape(6)">
+                <div class="position">
+                    <img class="shape dNone" id="circle-6" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-6" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(7)">
+                <div class="position">
+                    <div id="win7"></div>
+                    <img class="shape dNone" id="circle-7" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-7" src="./img/cross.png">
+                </div>
+            </td>
+            <td onclick="fillShape(8)">
+                <div class="position">
+                    <img class="shape dNone" id="circle-8" src="./img/circle.png">
+                    <img class="shape dNone" id="cross-8" src="./img/cross.png">
+                </div>
+            </td>
+        </tr>
+    </table>
+</body>
+<script src="app.js"></script>
+</html>
